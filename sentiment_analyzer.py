@@ -1,3 +1,5 @@
+from sklearn.feature_extraction.text import TfidfVectorizer
+
 texts = [
     "I love this movie",
     "This is amazing",
@@ -19,3 +21,23 @@ labels = [
     "negative",
     "negative"
 ]
+
+vectorizer = TfidfVectorizer()
+
+X = vectorizer.fit_transform(texts)
+
+print(X.toarray())
+
+from sklearn.naive_bayes import MultinomialNB
+
+model = MultinomialNB()
+
+model.fit(X, labels)
+
+new_text = input("Enter a sentence: ")
+
+new_text_vectorized = vectorizer.transform([new_text])
+
+prediction = model.predict(new_text_vectorized)
+
+print("Sentiment:", prediction[0])
